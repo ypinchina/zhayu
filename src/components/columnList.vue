@@ -10,7 +10,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType } from "vue";
+import { defineComponent, PropType } from 'vue'
 export interface ColumnProps {
   id: number;
   title: string;
@@ -20,7 +20,7 @@ export interface ColumnProps {
 export default defineComponent({
   props: {
     list: {
-      type: Array as PropType <ColumnProps[]>,
+      type: Array as PropType<ColumnProps[]>,
       require: true
     }
   }
