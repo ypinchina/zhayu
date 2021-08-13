@@ -6,7 +6,7 @@
         <div class="card-body text-center">
           <img :src="item.avatar" alt="avatar" class="rounded-circle border border-light w-25 my-3"/>
           <h5 class="card-title">{{ item.title }}</h5>
-          <p class="card-text text-left">{{ item.description }}</p>
+          <p class="card-text text-left mb-4 my-4">{{ item.description }}</p>
           <a href="#" class="btn btn-outline-primary">进入专栏</a>
         </div>
       </div>
