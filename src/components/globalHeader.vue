@@ -8,7 +8,10 @@
     </ul>
     <ul v-else class="list-inline mb-0">
       <li class="list-inline-item">
-        <drop-down :title="user.name" />
+        <drop-down :title="`你好, ${user.name}`">
+          <dropdown-item><a href="#" class="dropdown-item">新建文章</a></dropdown-item>
+          <dropdown-item :disabled="true"><a href="#" class="dropdown-item">编辑资料</a></dropdown-item>
+        </drop-down>
       </li>
     </ul>
   </nav>
@@ -17,6 +20,7 @@
 <script lang="ts">
 import { defineComponent, PropType } from 'vue'
 import DropDown from './DropDown.vue'
+import DropdownItem from './dropdownItem.vue'
 export interface NavProps {
   isLogin: boolean,
   name?: string,
@@ -29,7 +33,7 @@ export default defineComponent({
       required: true
     }
   },
-  components: { DropDown }
+  components: { DropDown, DropdownItem }
 })
 </script>
 
