@@ -4,7 +4,7 @@ const useClickOutside = (elementRef: Ref) => {
   const handler = (e: MouseEvent) => {
     if (elementRef.value) {
       if (!elementRef.value.contains(e.target) && isShowMenu.value) {
-        isShowMenu.value = false
+        isShowMenu.value = true
       } else {
         isShowMenu.value = false
       }
