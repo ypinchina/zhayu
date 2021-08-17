@@ -5,8 +5,7 @@
     <form>
       <div class="mb-3">
         <label for="exampleInputEmail1" class="form-label">{{ emailRef.labelName }}</label>
-        <input type="email" class="form-control" v-model="emailRef.emailVal" @blur="emailBlur" id="exampleInputEmail1" aria-describedby="emailHelp">
-        <div id="emailHelp" class="form-text">{{ emailRef.emailRule }}</div>
+        <validate-input :rules="emailValidateRule"></validate-input>
       </div>
       <div class="mb-3">
         <label for="exampleInputPassword1" class="form-label">Password</label>
@@ -19,6 +18,7 @@
 <script lang='ts'>
 import 'bootstrap/dist/css/bootstrap.min.css'
 import GlobalHeader, { NavProps } from './components/globalHeader.vue'
+import validateInput, { rulesProps } from './components/validateInput.vue'
 import { defineComponent, reactive } from 'vue'
 const userTestData: NavProps = {
   isLogin: true,
@@ -27,9 +27,13 @@ const userTestData: NavProps = {
 }
 export default defineComponent({
   components: {
-    GlobalHeader
+    GlobalHeader, validateInput
   },
   setup () {
+    const emailValidateRule: rulesProps = [
+      { type: 'required', message: '邮箱信息不能为空' },
+      { type: 'email', message: '请输入正确的邮箱格式' }
+    ]
     const emailRef = reactive({
       labelName: 'email',
       emailVal: '',
@@ -42,7 +46,7 @@ export default defineComponent({
         emailRef.emailRule = 'email格式不符合规范'
       }
     }
-    return { userObj: userTestData, emailRef, emailBlur }
+    return { userObj: userTestData, emailRef, emailBlur, emailValidateRule }
   }
 })
 </script>
