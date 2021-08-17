@@ -1,8 +1,8 @@
 <!--  -->
 <template>
-  <div class="pb-3">
-    <input type="email" class="form-control" :style="{'is-valid': emailRef.error}" v-model="emailRef.val" @blur="inputValidate">
-    <div id="emailHelp" v-is='emailRef.error' class="valid-feedback">{{ emailRef.message }}</div>
+  <div class="validate-input-container pb-3">
+    <input type="email" class="form-control" :style="{'is-invalid': emailRef.error}" v-model="emailRef.val" @blur="inputValidate">
+    <span v-if="emailRef.error" >{{ emailRef.message }}</span>
   </div>
 </template>
 
@@ -27,14 +27,13 @@ export default defineComponent({
       error: false
     })
     const inputValidate = () => {
-      console.log(1)
       if (props.rules) {
         const allPassed = props.rules.every(rule => {
           let passed = true
           emailRef.message = rule.message
           switch (rule.type) {
             case 'required':
-              passed = emailRef.val.trim() !== ''
+              passed = (emailRef.val.trim() !== '')
               break
             case 'email':
               passed = emailZz.test(emailRef.val)
