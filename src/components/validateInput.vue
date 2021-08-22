@@ -1,7 +1,9 @@
 <!--  -->
 <template>
   <div class="validate-input-container pb-3">
-    <input type="email" class="form-control" :style="{'is-invalid': emailRef.error}" v-model="emailRef.val" @blur="inputValidate">
+    <input type="email" class="form-control"
+    :style="{'is-invalid': emailRef.error}"
+    :value="emailRef.val" @blur="inputValidate" @input="updateVal">
     <span v-if="emailRef.error" >{{ emailRef.message }}</span>
   </div>
 </template>
@@ -18,14 +20,20 @@ export default defineComponent({
   props: {
     rules: {
       type: Array as PropType<rulesProps>
-    }
+    },
+    modelValue: String
   },
-  setup (props) {
+  setup (props, context) {
     const emailRef = reactive({
-      val: '',
+      val: props.modelValue || '',
       message: '',
       error: false
     })
+    const updateVal = (e: KeyboardEvent) => {
+      const inputVal = (e.target as HTMLInputElement).value
+      emailRef.val = inputVal
+      context.emit('update:modelValue', inputVal)
+    }
     const inputValidate = () => {
       if (props.rules) {
         const allPassed = props.rules.every(rule => {
@@ -46,7 +54,7 @@ export default defineComponent({
         emailRef.error = !allPassed
       }
     }
-    return { emailRef, inputValidate }
+    return { emailRef, inputValidate, updateVal }
   }
 })
 </script>
