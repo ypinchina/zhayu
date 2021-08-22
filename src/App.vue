@@ -2,7 +2,7 @@
 <template>
   <div class="container">
     <global-header :user="userObj"></global-header>
-    <form>
+    <Validate-form @on-formSubmit="submitThisForm">
       <div class="mb-3">
         <label for="exampleInputEmail1" class="form-label">{{ emailRef.labelName }}</label>
         <validate-input :rules="emailValidateRule" v-model="modelValue" type="text" placeholder="请输入邮箱地址"></validate-input>
@@ -12,7 +12,10 @@
         <label for="exampleInputPassword1" class="form-label">Password</label>
         <validate-input :rules="passwordRules" type="password" placeholder="请输入密码"></validate-input>
       </div>
-    </form>
+      <template #submit>
+        <span class="btn btn-danger">submit</span>
+      </template>
+    </Validate-form>
   </div>
 </template>
 
@@ -21,6 +24,7 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import GlobalHeader, { NavProps } from './components/globalHeader.vue'
 import validateInput, { rulesProps } from './components/validateInput.vue'
 import { defineComponent, reactive, ref } from 'vue'
+import ValidateForm from './components/ValidateForm.vue'
 const userTestData: NavProps = {
   isLogin: true,
   id: 5,
@@ -28,9 +32,12 @@ const userTestData: NavProps = {
 }
 export default defineComponent({
   components: {
-    GlobalHeader, validateInput
+    GlobalHeader, validateInput, ValidateForm
   },
   setup () {
+    const submitThisForm = (params: boolean) => {
+      console.log(719, params)
+    }
     const modelValue = ref('yip')
     const emailValidateRule: rulesProps = [
       { type: 'required', message: '邮箱信息不能为空' },
@@ -53,7 +60,7 @@ export default defineComponent({
         emailRef.emailRule = 'email格式不符合规范'
       }
     }
-    return { userObj: userTestData, emailRef, emailBlur, emailValidateRule, modelValue }
+    return { userObj: userTestData, emailRef, emailBlur, emailValidateRule, modelValue, submitThisForm }
   }
 })
 </script>
