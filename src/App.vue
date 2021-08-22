@@ -5,12 +5,12 @@
     <form>
       <div class="mb-3">
         <label for="exampleInputEmail1" class="form-label">{{ emailRef.labelName }}</label>
-        <validate-input :rules="emailValidateRule" v-model="modelValue"></validate-input>
+        <validate-input :rules="emailValidateRule" v-model="modelValue" type="text" placeholder="请输入邮箱地址"></validate-input>
         {{ modelValue }}
       </div>
       <div class="mb-3">
         <label for="exampleInputPassword1" class="form-label">Password</label>
-        <input type="password" class="form-control" id="exampleInputPassword1">
+        <validate-input :rules="passwordRules" type="password" placeholder="请输入密码"></validate-input>
       </div>
     </form>
   </div>
@@ -35,6 +35,11 @@ export default defineComponent({
     const emailValidateRule: rulesProps = [
       { type: 'required', message: '邮箱信息不能为空' },
       { type: 'email', message: '请输入正确的邮箱格式' }
+    ]
+    const passwordRules: rulesProps = [
+      {
+        type: 'required', message: '请输入密码'
+      }
     ]
     const emailRef = reactive({
       labelName: 'email',

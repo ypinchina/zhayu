@@ -3,7 +3,7 @@
   <div class="validate-input-container pb-3">
     <input type="email" class="form-control"
     :style="{'is-invalid': emailRef.error}"
-    :value="emailRef.val" @blur="inputValidate" @input="updateVal">
+    :value="emailRef.val" @blur="inputValidate" @input="updateVal" v-bind="$attrs">
     <span v-if="emailRef.error" >{{ emailRef.message }}</span>
   </div>
 </template>
@@ -17,6 +17,7 @@ interface rulesProp {
 }
 export type rulesProps = rulesProp[]
 export default defineComponent({
+  inheritAttrs: false,
   props: {
     rules: {
       type: Array as PropType<rulesProps>
@@ -24,6 +25,7 @@ export default defineComponent({
     modelValue: String
   },
   setup (props, context) {
+    // $attrs 在context中取到
     const emailRef = reactive({
       val: props.modelValue || '',
       message: '',
