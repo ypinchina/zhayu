@@ -60,7 +60,7 @@ export default defineComponent({
         emailRef.emailRule = 'email格式不符合规范'
       }
     }
-    return { userObj: userTestData, emailRef, emailBlur, emailValidateRule, modelValue, submitThisForm }
+    return { userObj: userTestData, emailRef, emailBlur, emailValidateRule, modelValue, submitThisForm, passwordRules }
   }
 })
 </script>

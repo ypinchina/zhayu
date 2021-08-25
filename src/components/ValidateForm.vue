@@ -14,18 +14,23 @@
 import { defineComponent, onUnmounted } from 'vue'
 import mitt from 'mitt'
 export const emitter = mitt()
+type ValidateForm = () => boolean | undefined
 export default defineComponent({
   emits: ['on-formSubmit'],
   setup (prop, context) {
+    let resultArr: ValidateForm[] = []
     const submitForm = () => {
-      context.emit('on-formSubmit', true)
+      console.log(resultArr)
+      const result = resultArr.map(result => result).every(func => func)
+      context.emit('on-formSubmit', result)
     }
-    const callback = (test: any) => {
-      console.log(test)
+    const callback = (func: ValidateForm) => {
+      resultArr.push(func)
     }
     emitter.on('form-item-created', callback)
     onUnmounted(() => {
       emitter.off('form-item-created', callback)
+      resultArr = []
     })
     return { submitForm }
   }
